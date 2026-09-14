@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siswa Wicara - Media Pembelajaran Sesorah Basa Jawa XI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rozha+One&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .font-javanese {
+            font-family: 'Rozha One', serif;
+        }
+        .batik-pattern {
+            background-color: #78350f;
+            background-image: radial-gradient(#fbbf24 0.75px, transparent 0.75px), radial-gradient(#fbbf24 0.75px, #78350f 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.95;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen custom-scrollbar">
+
+    <!-- Header Navigation -->
+    <header class="bg-amber-900 text-amber-50 shadow-lg sticky top-0 z-50 border-b-2 border-amber-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-amber-950 font-bold text-2xl shadow-md transform hover:rotate-6 transition">
+                        <i class="fa-solid fa-scroll"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-javanese text-2xl tracking-wide text-amber-300">Wicara Jawa</h1>
+                        <p class="text-xs text-amber-200/80 tracking-wider">Media Pembelajaran Sesorah SMA Kelas XI</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Tabs -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-amber-200 hover:text-white hover:bg-amber-800/60">
+                        <i class="fa-solid fa-book-open text-xs"></i> <span>1. Materi Sesorah</span>
+                    </button>
+                    <button onclick="switchTab('latihan')" id="nav-latihan" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-amber-200 hover:text-white hover:bg-amber-800/60">
+                        <i class="fa-solid fa-puzzle-piece text-xs"></i> <span>2. Gladhen (Struktur)</span>
+                    </button>
+                    <button onclick="switchTab('simulasi')" id="nav-simulasi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-amber-200 hover:text-white hover:bg-amber-800/60">
+                        <i class="fa-solid fa-microphone-lines text-xs"></i> <span>3. Simulasi Praktik</span>
+                    </button>
+                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-amber-200 hover:text-white hover:bg-amber-800/60">
+                        <i class="fa-solid fa-pen-to-square text-xs"></i> <span>4. Kuis Evaluasi</span>
+                    </button>
+                    <button onclick="switchTab('kamus')" id="nav-kamus" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center space-x-2 text-amber-200 hover:text-white hover:bg-amber-800/60">
+                        <i class="fa-solid fa-language text-xs"></i> <span>5. Kamus Cilik</span>
+                    </button>
+                </nav>
+
+                <!-- Mobile menu toggle -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-amber-200 hover:text-white p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-amber-950 border-t border-amber-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('materi')" class="w-full text-left px-3 py-2 rounded-lg text-amber-200 hover:bg-amber-800 flex items-center space-x-3">
+                <i class="fa-solid fa-book-open"></i> <span>1. Materi Sesorah</span>
+            </button>
+            <button onclick="switchTab('latihan')" class="w-full text-left px-3 py-2 rounded-lg text-amber-200 hover:bg-amber-800 flex items-center space-x-3">
+                <i class="fa-solid fa-puzzle-piece"></i> <span>2. Gladhen (Struktur)</span>
+            </button>
+            <button onclick="switchTab('simulasi')" class="w-full text-left px-3 py-2 rounded-lg text-amber-200 hover:bg-amber-800 flex items-center space-x-3">
+                <i class="fa-solid fa-microphone-lines"></i> <span>3. Simulasi Praktik</span>
+            </button>
+            <button onclick="switchTab('kuis')" class="w-full text-left px-3 py-2 rounded-lg text-amber-200 hover:bg-amber-800 flex items-center space-x-3">
+                <i class="fa-solid fa-pen-to-square"></i> <span>4. Kuis Evaluasi</span>
+            </button>
+            <button onclick="switchTab('kamus')" class="w-full text-left px-3 py-2 rounded-lg text-amber-200 hover:bg-amber-800 flex items-center space-x-3">
+                <i class="fa-solid fa-language"></i> <span>5. Kamus Cilik</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= HOME SECTION ================= -->
+        <section id="tab-home" class="tab-content block space-y-8">
+            <!-- Hero Card -->
+            <div class="batik-pattern rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="inline-block bg-amber-500/30 text-amber-200 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-amber-400/40">
+                        Basa Jawa Kelas XI SMA/SMK
+                    </span>
+                    <h2 class="font-javanese text-4xl sm:text-5xl text-amber-200 leading-tight">Sugeng Rawuh ing Medhia Sesorah Interaktif</h2>
+                    <p class="text-amber-100/90 text-base sm:text-lg leading-relaxed">
+                        Sesorah yaiku ngandharake gagasan utawa panemu marang wong akeh kanthi lisan. Ayo sinau struktur, cara, lan gladhen tanggap wacana kanthi cara kang luwih nyenengake lan modern!
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="switchTab('materi')" class="bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition flex items-center space-x-2">
+                            <span>Mulai Sinau Materi</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="switchTab('simulasi')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-xl border border-white/20 transition flex items-center space-x-2">
+                            <i class="fa-solid fa-microphone"></i> <span>Coba Simulasi Sesorah</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Decorative Icon -->
+                <i class="fa-solid fa-feather-pointed absolute -right-6 -bottom-10 text-white/10 text-9xl pointer-events-none select-none"></i>
+            </div>
+
+            <!-- Learning Objectives & Flow Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">1</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Pahami Teori & 4W</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Ngasah kawruh babagan wicara, wirama, wiraga, lan wirasa sarta perangan struktur sesorah (Purwaka, Surasa, Wasana).</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">2</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Gladhen Gladhi Nulis</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Nata paragraf kang acak supaya dadi teks sesorah kang runtut manut strukture.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-800 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">3</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Simulasi & Evaluasi</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Praktik maos sesorah nggunakake fitur teleprompter digital lan ngukur kabisan liwat kuis interaktif.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MATERI SECTION ================= -->
+        <section id="tab-materi" class="tab-content hidden space-y-6">
+            <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-amber-950 font-javanese">Wulangan: Teges, Struktur & Trapsila Sesorah</h2>
+                    <p class="text-slate-500 text-sm">Pahami konsep dasar sadurunge nindakake praktik sesorah.</p>
+                </div>
+                <!-- Sub-nav pills for material -->
+                <div class="flex space-x-2 bg-slate-200/60 p-1 rounded-xl text-xs font-semibold">
+                    <button onclick="showMateriSub('teges')" id="sub-teges" class="submateri-btn px-4 py-2 rounded-lg bg-white shadow text-amber-900">Teges & Tujuan</button>
+                    <button onclick="showMateriSub('struktur')" id="sub-struktur" class="submateri-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900">Struktur Teks</button>
+                    <button onclick="showMateriSub('metode')" id="sub-metode" class="submateri-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900">Metode & 4W</button>
+                </div>
+            </div>
+
+            <!-- Sub 1: Teges & Tujuan -->
+            <div id="materi-teges" class="materi-sub-content space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                    <h3 class="text-xl font-bold text-amber-900 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i> Apa iku Sesorah?
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        <strong class="text-amber-950">Sesorah (Pidato)</strong> yaiku ngandharake gagasan, panemu, utawa pesen marang wong akeh (pamiarsa) kanthi lisan ing sawijining acara. Sesorah nduweni tujuwan supaya wong kang krungu bisa mangerteni, percaya, utawa kesadaran marang apa kang diandharake.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-amber-50 border-l-4 border-amber-600 p-5 rounded-r-xl">
+                        <h4 class="font-bold text-amber-950 text-lg mb-2"><i class="fa-solid fa-bullhorn text-amber-700 mr-2"></i>Tujuan Sesorah</h4>
+                        <ul class="space-y-2 text-slate-700 text-sm list-disc list-inside">
+                            <li><strong>Atur Pambagya:</strong> Nampa tamu ing sawijining acara (hajatan/pahargyan).</li>
+                            <li><strong>Atur Kabar/Informasi:</strong> Biyadakake pawarta utawa informasi marang masarakat.</li>
+                            <li><strong>Atur Pangajak (Persuasif):</strong> Ngaluhurake utawa ngajak wong liya supaya nindakake tumindak becik.</li>
+                            <li><strong>Atur Hiburan:</strong> Nglipur ati para pamiarsa ing acara santai.</li>
+                            <li><strong>Atur Belasungkawa:</strong> Ngenthukake rasa belasungkawa ing omah duka.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-600 p-5 rounded-r-xl">
+                        <h4 class="font-bold text-blue-950 text-lg mb-2"><i class="fa-solid fa-users text-blue-700 mr-2"></i>Tuladha Acara Sesorah</h4>
+                        <ul class="space-y-2 text-slate-700 text-sm list-disc list-inside">
+                            <li>Tanggap Warsa (Ulang Tahun)</li>
+                            <li>Perpisahan Sekolahan (Kelas XII)</li>
+                            <li>Pahargyan Penganten (Pernikahan)</li>
+                            <li>Rapat Karang Taruna / RT</li>
+                            <li>Peringatan Hari Kartini / Kemerdekaan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub 2: Struktur Sesorah -->
+            <div id="materi-struktur" class="materi-sub-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-bold text-amber-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-amber-500"></i> Perangan / Struktur Sesorah
+                    </h3>
+                    <p class="text-slate-600 mb-6 text-sm">Teks sesorah kang apik lan runtut kudu ngandhut 3 perangan utama: Purwaka, Surasa, lan Wasana.</p>
+
+                    <div class="space-y-4">
+                        <!-- Purwaka Accordion/Card -->
+                        <div class="border border-amber-200 bg-amber-50/50 rounded-xl p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-amber-600 text-white font-bold text-xs px-3 py-1 rounded-full">1. PURWAKA (Pambuka)</span>
+                                <span class="text-xs text-amber-800 font-medium">Awal Pidato</span>
+                            </div>
+                            <p class="text-slate-700 text-sm mb-3">Isine salam pambuka, atur puji syukur dhumateng Gusti, lan atur pakurmatan marang para tamu.</p>
+                            <div class="bg-white p-3 rounded-lg border border-amber-100 text-xs text-slate-600 font-serif italic">
+                                "Sugeng siyang para rawuh ingkang satuhu kinurmatan. Sakderengipun mangga kita sesarengan ngaturaken puji syukur dhumateng Gusti Kang Maha Agung..."
+                            </div>
+                        </div>
+
+                        <!-- Surasa Accordion/Card -->
+                        <div class="border border-emerald-200 bg-emerald-50/50 rounded-xl p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-emerald-600 text-white font-bold text-xs px-3 py-1 rounded-full">2. SURASA BASA (Isi / Wos)</span>
+                                <span class="text-xs text-emerald-800 font-medium">Inti Pidato</span>
+                            </div>
+                            <p class="text-slate-700 text-sm mb-3">Isine kabeh bab wigati utawa inti pesen kang kepengin diandharake marang para pamiarsa.</p>
+                            <div class="bg-white p-3 rounded-lg border border-emerald-100 text-xs text-slate-600 font-serif italic">
+                                "Wondene tujuan kita makempal ing dinten punika inggih menika ngeringati Dinten Kartini sarta njiwahi semangat perjuangan..."
+                            </div>
+                        </div>
+
+                        <!-- Wasana Accordion/Card -->
+                        <div class="border border-indigo-200 bg-indigo-50/50 rounded-xl p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-indigo-600 text-white font-bold text-xs px-3 py-1 rounded-full">3. WASANA BASA (Panutup)</span>
+                                <span class="text-xs text-indigo-800 font-medium">Akhir Pidato</span>
+                            </div>
+                            <p class="text-slate-700 text-sm mb-3">Isine dudutan (kesimpulan), panyuwun pangapura yen ana kalepatan, lan salam panutup.</p>
+                            <div class="bg-white p-3 rounded-lg border border-indigo-100 text-xs text-slate-600 font-serif italic">
+                                "Mekaten ingkang saged kula aturaken, menawi wonten klenta-klentu atur kula nyuwun samudra pangaksami. Nuwun, Wassalamu'alaikum Wr. Wb."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub 3: Metode & 4W -->
+            <div id="materi-metode" class="materi-sub-content hidden space-y-6">
+                <!-- Metode Sesorah -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-bold text-amber-900 mb-4"><i class="fa-solid fa-sliders text-amber-500 mr-2"></i>Metode Nindakake Sesorah</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-amber-900 mb-1">1. Impromptu</h4>
+                            <p class="text-xs text-slate-600">Sesorah kanthi mendadak tanpa persiapan cathetan sakdurunge.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-amber-900 mb-1">2. Naskah (Maca)</h4>
+                            <p class="text-xs text-slate-600">Sesorah kanthi maca naskah kang wis disiapake kanthi jangkep.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-amber-900 mb-1">3. Hafalan</h4>
+                            <p class="text-xs text-slate-600">Nulis naskah luwih dhisik, nuli diapalake kabeh isine.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-amber-900 mb-1">4. Ekstemporan</h4>
+                            <p class="text-xs text-slate-600">Mung nggawa cathetan cilik isine garis gedhe (pokok-pokok) sesorah.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trapsila Sesorah (4W) -->
+                <div class="bg-gradient-to-r from-amber-900 to-amber-950 p-6 rounded-2xl text-white shadow-md">
+                    <h3 class="text-xl font-bold text-amber-300 mb-2 flex items-center gap-2 font-javanese">
+                        <i class="fa-solid fa-star"></i> Trapsila Sesorah: Agul-agul 4W
+                    </h3>
+                    <p class="text-amber-100/80 text-sm mb-6">Supaya anggone sesorah saged sae lan narik kawigaten, kudu nggatekake bab 4W iki:</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+                            <span class="text-amber-400 font-bold text-lg block">WICARA (Pocapan)</span>
+                            <p class="text-xs text-amber-100">Artikulasi, cetha ora-ne swara, panuturan basa Jawa (dha, tha, ga, jsp), lan irama ucapan.</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+                            <span class="text-amber-400 font-bold text-lg block">WIRAMA (Irama Swara)</span>
+                            <p class="text-xs text-amber-100">Dhuwur cendheke swara, alus kasare irama, banter alon anggone ngendika manut kahanan.</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+                            <span class="text-amber-400 font-bold text-lg block">WIRAGA (Sikap & Solah Bawa)</span>
+                            <p class="text-xs text-amber-100">Obahing awak (gesture), pasuryan (ekspresi wajah), tata ngadeg kang jejeg, lan sopan santun.</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl border border-white/10">
+                            <span class="text-amber-400 font-bold text-lg block">WIRASA (Penghayatan)</span>
+                            <p class="text-xs text-amber-100">Penghayatan marang isine sesorah. Yen sesorah sedhih pasuryane kudu prihatin, yen seneng pasuryane sumeh.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= LATIHAN SECTION ================= -->
+        <section id="tab-latihan" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-amber-950 font-javanese">Gladhen: Nata Runtut Teks Sesorah</h2>
+                        <p class="text-slate-500 text-sm">Urutna paragraf sesorah acak ing ngisor iki manut struktur kang bener (Purwaka -> Surasa -> Wasana)!</p>
+                    </div>
+                    <button onclick="resetOrderingGame()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center space-x-2 transition">
+                        <i class="fa-solid fa-rotate-right"></i> <span>Reset Gladhen</span>
+                    </button>
+                </div>
+
+                <!-- Drag/Sort Container -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Left: Scrambled Blocks -->
+                    <div class="lg:col-span-12 space-y-3" id="ordering-list">
+                        <!-- Dynamic items generated by JS -->
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <div id="ordering-feedback" class="text-sm font-semibold hidden"></div>
+                    <button onclick="checkOrderingAnswer()" class="ml-auto bg-amber-600 hover:bg-amber-700 text-white font-bold px-6 py-3 rounded-xl shadow transition flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-check"></i> <span>Chek Urutan Jawaban</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SIMULASI SECTION ================= -->
+        <section id="tab-simulasi" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-amber-950 font-javanese">Simulasi Teleprompter & Praktik Sesorah</h2>
+                    <p class="text-slate-500 text-sm">Pilih tema sesorah, atur kecepatan teks, banjur jajal maca kanthi lafal lan irama (Wicara & Wirama) kang tepat!</p>
+                </div>
+
+                <!-- Teleprompter Controls -->
+                <div class="bg-slate-900 text-white p-4 rounded-t-2xl flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <label class="text-xs text-slate-400 font-semibold uppercase">Pilih Tema:</label>
+                        <select id="teleprompter-topic" onchange="changeTeleprompterText()" class="bg-slate-800 text-amber-300 text-sm rounded-lg border border-slate-700 px-3 py-1.5 focus:outline-none focus:border-amber-500">
+                            <option value="perpisahan">Perpisahan Sekolahan (Kelas XII)</option>
+                            <option value="kartini">Tanggap Warsa Hari Kartini</option>
+                            <option value="kebersihan">Karesikan Lingkungan Sekolahan</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs text-slate-400">Kecepatan:</span>
+                            <input type="range" id="speed-slider" min="1" max="5" value="2" class="w-24 accent-amber-500">
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="btn-prompter-play" onclick="toggleTeleprompter()" class="bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold px-4 py-2 rounded-lg text-xs flex items-center space-x-1">
+                                <i class="fa-solid fa-play" id="play-icon"></i> <span id="play-text">Mulai Scroll</span>
+                            </button>
+                            <button onclick="resetTeleprompter()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg text-xs">
+                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teleprompter Viewport Box -->
+                <div id="prompter-box" class="h-80 bg-slate-950 text-slate-100 p-8 overflow-y-auto custom-scrollbar relative font-serif text-xl sm:text-2xl leading-relaxed text-center rounded-b-2xl border-x border-b border-slate-900">
+                    <div id="prompter-text" class="py-20 transition-all duration-300">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Self Assessment Rubric -->
+                <div class="mt-8 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+                    <h3 class="font-bold text-amber-950 text-lg mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-check text-amber-700"></i> Lembar Penilaian Diri (Self-Refleksi Praktik)
+                    </h3>
+                    <p class="text-xs text-slate-600 mb-4">Sawise praktik sesorah ing ndhuwur, wenehana centhang (✓) manut kabisanmu dhewé:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <label class="flex items-center space-x-3 bg-white p-3 rounded-lg border border-amber-100 cursor-pointer">
+                            <input type="checkbox" class="accent-amber-600 w-4 h-4">
+                            <span class="text-slate-700">Swaraku wis cetha lan cetha pocapane (Wicara)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 bg-white p-3 rounded-lg border border-amber-100 cursor-pointer">
+                            <input type="checkbox" class="accent-amber-600 w-4 h-4">
+                            <span class="text-slate-700">Tempo ora kepetengen lan ora keladuk alon (Wirama)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 bg-white p-3 rounded-lg border border-amber-100 cursor-pointer">
+                            <input type="checkbox" class="accent-amber-600 w-4 h-4">
+                            <span class="text-slate-700">Sikap ngadeg jejek lan pasuryan sumeh/grapyak (Wiraga)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 bg-white p-3 rounded-lg border border-amber-100 cursor-pointer">
+                            <input type="checkbox" class="accent-amber-600 w-4 h-4">
+                            <span class="text-slate-700">Ngayati isi lan pesen sesorah kanthi tenanan (Wirasa)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= KUIS SECTION ================= -->
+        <section id="tab-kuis" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <!-- Quiz Header / Score Container -->
+                <div id="quiz-header" class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-amber-950 font-javanese">Kuis Evaluasi Sesorah</h2>
+                        <p class="text-slate-500 text-sm">Uji pemahamanmu babagan struktur, metode, lan aturan sesorah Basa Jawa.</p>
+                    </div>
+                    <div class="bg-amber-100 text-amber-900 px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2">
+                        <i class="fa-solid fa-trophy text-amber-600"></i>
+                        <span id="quiz-score-badge">Skor: 0 / 50</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Main Body -->
+                <div id="quiz-body" class="space-y-6">
+                    <!-- Questions Container -->
+                    <div id="questions-wrapper" class="space-y-8">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-100 flex justify-end">
+                        <button onclick="submitQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-xl shadow-md transition flex items-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i> <span>Kirim Jawaban Kuis</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Results Modal/View -->
+                <div id="quiz-result" class="hidden text-center py-10 space-y-4">
+                    <div class="w-20 h-20 bg-amber-500 text-amber-950 rounded-full flex items-center justify-center text-4xl mx-auto shadow-lg animate-bounce">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-slate-800">Asil Evaluasi Sesorah</h3>
+                    <div class="text-5xl font-extrabold text-amber-600" id="final-score">0</div>
+                    <p id="score-feedback-text" class="text-slate-600 text-sm max-w-md mx-auto"></p>
+                    <div class="pt-4">
+                        <button onclick="restartQuiz()" class="bg-amber-900 hover:bg-amber-950 text-white font-bold px-6 py-3 rounded-xl transition">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Baleni Kuis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= KAMUS SECTION ================= -->
+        <section id="tab-kamus" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-amber-950 font-javanese">Kamus Cilik: Basa Krama Sesorah</h2>
+                        <p class="text-slate-500 text-sm">Daftar tembung (kosakata) Krama Inggil kang asring digunakake ing teks sesorah.</p>
+                    </div>
+                    <!-- Search Input -->
+                    <div class="relative w-full sm:w-64">
+                        <input type="text" id="search-kamus" onkeyup="filterKamus()" placeholder="Goleki tembung..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Glossary Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-amber-900 text-amber-100 text-xs font-semibold uppercase tracking-wider">
+                                <th class="p-3.5 rounded-tl-xl">Tembung Krama</th>
+                                <th class="p-3.5">Basa Ngoko</th>
+                                <th class="p-3.5">Basa Indonesia</th>
+                                <th class="p-3.5 rounded-tr-xl">Tuladha ing Ukara Sesorah</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kamus-table-body" class="divide-y divide-slate-100 text-sm text-slate-700">
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Wicara Jawa - Medhia Pembelajaran Interaktif Basa Jawa SMA Kelas XI</p>
+            <p class="mt-1 text-slate-500">Materi Sesorah / Tanggap Wacana • Kurikulum Merdeka</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data Structure for Ordering Game (Gladhen)
+        const orderingData = [
+            {
+                id: "item-1",
+                correctIndex: 1,
+                tag: "PURWAKA (Pambuka)",
+                text: "Sugeng siyang para Bapak, Ibu, lan kanca-kanca ingkang satuhu kinurmatan. Sakderengipun kersaa panjenengan sedaya kula dherekaken ngaturaken puji syukur dhumateng Gusti Kang Maha Agung, ingkang sampun nglimpahaken rahmat sarta hidayah saengga kita sedaya saged makempal wonten ing papan punika kanthi kasugengan."
+            },
+            {
+                id: "item-2",
+                correctIndex: 2,
+                tag: "SURASA BASA (Isi)",
+                text: "Bapak saha Ibu ingkang dahat kinabekten, ing dinten punika kita mengeti Dinten Pendidikan Nasional. Wosing sesorah punika, pendhidhikan menika wigati sanget kagem kemajenganing bangsa lan negara. Para mudha kudu setya lan sregep anggone ngangsu kawruh supaya ing tembe mburi saged njunjung drajating tiyang sepuh lan nagari."
+            },
+            {
+                id: "item-3",
+                correctIndex: 3,
+                tag: "WASANA BASA (Panutup)",
+                text: "Wusana, mekaten ingkang saged kula aturaken wonten ing kalodhangan punika. Menawi wonten atur lan patrap ingkang kirang mranani ing penggalih panjenengan sedaya, kanthi andhap asor kula nyuwun samudra pangaksami. Nuwun."
+            }
+        ];
+
+        let currentOrderState = [];
+
+        // Teleprompter Content
+        const prompterTexts = {
+            perpisahan: `Assalamu'alaikum Warahmatullahi Wabarakatuh.
+            
+Ingkang satuhu kinurmatan Bapak Kepala Sekolah, Bapak lan Ibu Guru, sarta kanca-kanca siswa kelas XI lan XII ingkang kula tresnani.
+
+Sepisanan, mangga kita sesarengan ngaturaken puji syukur dhumateng Gusti Kang Maha Kuasa, amargi ing dinten punika kita tansah pinaringan kasarasan saengga saged makempal ing acara Perpisahan Siswa Kelas XII.
+
+Bapak lan Ibu Guru ingkang dahat kinabekten, kula wakil saking para siswa nyuwun agunging pangaksama menawi salawasipun ngangsu kawruh ing sekolah punika kathah kalepatan patrap utawa atur ingkang boten mranani penggalih. Mugi-mugi sedaya ilmu ingkang sampun Bapak Ibu paringaken saged dados bekal migunani tumrap nusa, bangsa, lan agama.
+
+Wusana, cekap semanten atur kula. Menawi wonten klenta-klentu nyuwun pangaksami. 
+Wassalamu'alaikum Warahmatullahi Wabarakatuh.`,
+
+            kartini: `Sugeng enjang para rawuh ingkang satuhu kinurmatan.
+
+Dumateng Bapak lan Ibu Guru sarta kanca-kanca ingkang kula banggake, puji syukur wonten ing ngarsa Gusti ingkang Maha Asih dene kita saged makempal ing mengeti Dinten Kartini punika.
+
+Raden Ajeng Kartini minangka pahlawan emansipasi wanita ingkang pantes kita tulad sejatining semangat lan perjuanganipun. Piyambakipun mbuktekaken bilih wanita nggadhahi hak ingkang sami nggayuh pendhidhikan lan kemajengan.
+
+Mula minangka generasi mudha, ayo kita terusake semangat Raden Ajeng Kartini kanthi sregep belajar lan njaga budi pekerti ingkang luhur.
+
+Mekaten ingkang saged kula aturaken, matur nuwun ingkang kathah amargi perhatianipun. Matur nuwun.`,
+
+            kebersihan: `Sugeng siyang para kanca ingkang kula tresnani.
+
+Puji syukur kita aturaken dhumateng Gusti Kang Maha Kuwasa saengga kita saged kempal wonten ing papan punika kanthi slamet lan rahayu.
+
+Ing kalodhangan punika, kula pengin ngajak para kanca sedaya njaga karesikan ing lingkungan sekolah kita. Lingkungan ingkang resik bakal nggawe kita sinau kanthi nyaman, sehat, lan semangat.
+
+Ayo padha mbuwang sampah ing panggenanipun lan njaga keasrian taman sekolah.
+
+Cekap semanten atur saking kula, nyuwun pangapunten yen wonten atur ingkang kirang trep. Nyuwun sewu lan matur nuwun.`
+        };
+
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                q: "Perangan sesorah ingkang isine ngaturaken puji syukur dhumateng Gusti lan atur pakurmatan marang para tamu dipunswani...",
+                options: ["Wasana Basa", "Purwaka Basa", "Surasa Basa", "Dudutan"],
+                answer: 1
+            },
+            {
+                q: "Yen ana wong sesorah dadakan tanpa persiapan lan cathetan amargi dipuntunjuk mendadak, metode sesorah iki diarani...",
+                options: ["Metode Naskah", "Metode Ekstemporan", "Metode Impromptu", "
